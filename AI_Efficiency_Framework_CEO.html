@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Efficiency Framework</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  body {
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.45;
+    font-size: 11pt;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px;
+    background: #fff;
+  }
+  h1 {
+    font-size: 24pt;
+    margin: 0 0 4px 0;
+    color: #0b3d91;
+    letter-spacing: -0.5px;
+  }
+  .subtitle {
+    color: #555;
+    font-size: 11pt;
+    margin-bottom: 18px;
+    border-bottom: 2px solid #0b3d91;
+    padding-bottom: 12px;
+  }
+  h2 {
+    font-size: 13pt;
+    color: #0b3d91;
+    margin: 18px 0 6px 0;
+    border-left: 4px solid #0b3d91;
+    padding-left: 8px;
+  }
+  h3 {
+    font-size: 11pt;
+    margin: 10px 0 4px 0;
+    color: #222;
+  }
+  p { margin: 4px 0 8px 0; }
+  ul { margin: 4px 0 8px 18px; padding: 0; }
+  li { margin-bottom: 3px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 12px 0;
+    font-size: 10pt;
+  }
+  th, td {
+    border: 1px solid #d0d7de;
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: #f1f5fb;
+    color: #0b3d91;
+    font-weight: 600;
+  }
+  .callout {
+    background: #f1f5fb;
+    border-left: 4px solid #0b3d91;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 3px;
+  }
+  .matrix td {
+    height: 60px;
+    width: 50%;
+  }
+  .quick-win { background: #e6f4ea; }
+  .strategic { background: #fef7e0; }
+  .fillin    { background: #f1f3f4; }
+  .avoid     { background: #fce8e6; }
+  .label { font-weight: 700; display: block; margin-bottom: 3px; }
+  .footer {
+    margin-top: 20px;
+    font-size: 9pt;
+    color: #777;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 8px;
+    text-align: center;
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<h1>AI Efficiency Framework</h1>
+<div class="subtitle">A lightweight way to find, score, and prioritise AI quick wins across the business.</div>
+
+<h2>1. The Goal</h2>
+<p>Find the AI opportunities that deliver the most value with the least friction. We start with quick wins to build momentum, prove value, and earn trust for bigger initiatives.</p>
+
+<div class="callout">
+<strong>The sweet spot:</strong> high user frustration meets low technical complexity. Solve a hated task with simple tools, and adoption follows.
+</div>
+
+<h2>2. The 3-Step Process</h2>
+<table>
+<tr><th style="width:80px;">Step</th><th>Activity</th><th>Output</th></tr>
+<tr><td><strong>1. Discover</strong></td><td>Run a workshop. Ask the team where the daily pain lives.</td><td>A list of 5 to 8 candidate use cases.</td></tr>
+<tr><td><strong>2. Score</strong></td><td>Rate each idea on Impact and Complexity (1 to 5 scale).</td><td>A simple score for each idea.</td></tr>
+<tr><td><strong>3. Prioritise</strong></td><td>Plot the ideas on the Quick-Win Matrix.</td><td>A clear, ranked roadmap.</td></tr>
+</table>
+
+<h2>3. Discovery Questions (Pick 5 for the workshop)</h2>
+
+<div class="two-col">
+<div>
+<h3>Pain Points</h3>
+<ul>
+<li>What is the most frustrating, repetitive task your team does daily?</li>
+<li>Where do processes stall while waiting on sign-offs or info?</li>
+<li>Which questions flood your inbox but need little thinking?</li>
+</ul>
+
+<h3>Quick Wins</h3>
+<ul>
+<li>Where would a 10% to 20% speed gain change your week?</li>
+<li>Do you have good internal documents staff struggle to search?</li>
+</ul>
+</div>
+<div>
+<h3>Wasted Time</h3>
+<ul>
+<li>How long do users spend searching across different systems?</li>
+<li>Which templates or reports do you redraft over and over?</li>
+</ul>
+
+<h3>Readiness</h3>
+<ul>
+<li>What is the cleanest dataset we could access right away?</li>
+<li>Who are the super users keen to test a prototype?</li>
+<li>What manual process is already mapped step by step?</li>
+</ul>
+</div>
+</div>
+
+<div class="page-break"></div>
+
+<h2>4. The Scoring Framework</h2>
+<p>Rate each idea from <strong>1 to 5</strong> on these four criteria. Keep it fast: 5 minutes per idea.</p>
+
+<h3>Impact Score (Value Created)</h3>
+<table>
+<tr><th style="width:140px;">Criterion</th><th>Score 1</th><th>Score 3</th><th>Score 5</th></tr>
+<tr><td><strong>A. Time Saved</strong></td><td>Minutes a week, one person</td><td>Hours a week, small team</td><td>Dozens of hours, large team</td></tr>
+<tr><td><strong>B. Frustration Reduced</strong></td><td>Minor nuisance</td><td>Annoying, regular complaints</td><td>Universally hated task</td></tr>
+</table>
+<p><strong>Impact Total = A + B</strong> (out of 10)</p>
+
+<h3>Complexity Score (Ease of Delivery)</h3>
+<table>
+<tr><th style="width:140px;">Criterion</th><th>Score 1 (Hard)</th><th>Score 3 (Medium)</th><th>Score 5 (Easy)</th></tr>
+<tr><td><strong>C. Data Readiness</strong></td><td>Messy, paper, legacy silos</td><td>Digital but needs cleaning</td><td>Clean, centralised, templated</td></tr>
+<tr><td><strong>D. Risk &amp; Integration</strong></td><td>Regulated data, writes to core systems</td><td>Sensitive data, human reviews</td><td>Low-risk, read-only assistant</td></tr>
+</table>
+<p><strong>Ease Total = C + D</strong> (out of 10). A higher score means easier to build.</p>
+
+<h2>5. The Quick-Win Matrix</h2>
+<p>Plot each idea using its two totals. The top-right quadrant is your starting line.</p>
+
+<table class="matrix">
+<tr>
+<td class="strategic"><span class="label">2. Strategic Initiatives</span>High Impact / Harder to Build<br><em>Plan for the mid-term roadmap.</em><br>e.g. end-to-end automation, deep system integration.</td>
+<td class="quick-win"><span class="label">1. Quick Wins (Do First)</span>High Impact / Easy to Build<br><em>Your immediate statement of work.</em><br>e.g. FAQ search, draft reports, email triage.</td>
+</tr>
+<tr>
+<td class="avoid"><span class="label">4. Hard Slogs (Avoid)</span>Low Impact / Harder to Build<br><em>Not worth the effort right now.</em><br>e.g. automating legacy workflows with messy data.</td>
+<td class="fillin"><span class="label">3. Fill-Ins (Nice to Have)</span>Low Impact / Easy to Build<br><em>Pick up when capacity allows.</em><br>e.g. basic meeting summary tools.</td>
+</tr>
+</table>
+
+<h2>6. What Good Looks Like</h2>
+<ul>
+<li><strong>Speed:</strong> first working prototype in 4 weeks, not 4 months.</li>
+<li><strong>Focus:</strong> one team, one task, one clear win.</li>
+<li><strong>Trust:</strong> start with low-risk, read-only or draft-only tools.</li>
+<li><strong>Momentum:</strong> a visible win earns the licence to tackle bigger problems.</li>
+</ul>
+
+<div class="callout">
+<strong>The principle:</strong> a small, working tool beats a perfect plan every time. Quick wins are not the whole story. They are the door opener.
+</div>
+
+<div class="footer">AI Efficiency Framework &middot; Prepared for the Executive Team</div>
+
+</body>
+</html>
