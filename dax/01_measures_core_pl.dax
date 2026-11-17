@@ -1,0 +1,50 @@
+// =========================================================================
+// 8.1 Core P&L  (spec §8.1)
+//
+// Measure table: Home → Enter data → one row, name _Measures, hide the column.
+// Paste each measure separately via Modeling → New Measure.
+//
+// Note on [Revenue]: it does NOT need a RecordType filter.
+// Elimination rows carry negative Amount AND Section = "Revenue", so a plain
+// sum over the section already gives the net post-elimination figure.
+// That is the point of adding eliminations as rows rather than deleting
+// source rows.
+// =========================================================================
+
+Gross Revenue =
+CALCULATE (
+    SUM ( fact_PL[Amount] ),
+    fact_PL[Section] = "Revenue",
+    fact_PL[RecordType] = "Source"
+)
+
+Revenue Eliminations =
+CALCULATE (
+    SUM ( fact_PL[Amount] ),
+    fact_PL[Section] = "Revenue",
+    fact_PL[RecordType] = "Elimination"
+)
+
+Revenue =
+CALCULATE ( SUM ( fact_PL[Amount] ), fact_PL[Section] = "Revenue" )
+
+Gross COGS =
+CALCULATE (
+    SUM ( fact_PL[Amount] ),
+    fact_PL[Section] = "COGS",
+    fact_PL[RecordType] = "Source"
+)
+
+COGS Eliminations =
+CALCULATE (
+    SUM ( fact_PL[Amount] ),
+    fact_PL[Section] = "COGS",
+    fact_PL[RecordType] = "Elimination"
+)
+
+COGS =
+CALCULATE ( SUM ( fact_PL[Amount] ), fact_PL[Section] = "COGS" )
+
+Gross Profit = [Revenue] - [COGS]
+
+Gross Margin % = DIVIDE ( [Gross Profit], [Revenue] )

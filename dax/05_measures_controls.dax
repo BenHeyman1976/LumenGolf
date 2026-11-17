@@ -1,0 +1,71 @@
+// =========================================================================
+// 8.5 Controls  (spec §8.5)
+// =========================================================================
+
+// Control A. Must be exactly 0. Non-zero means the import lost or duplicated
+// something. See spec §7.12.
+Check Import Variance = SUM ( chk_ImportIntegrity[Variance] )
+
+Check Import Status =
+IF ( ABS ( [Check Import Variance] ) < 1, "PASS", "FAIL -- investigate" )
+
+// Control D. The external revenue left in account 5230 after elimination.
+// FY2025 actual: ¥62,500.  FY2025 budget: ¥6,602,954 -- see spec §6 item 2.
+Check 5230 Residual =
+VAR Booked =
+    CALCULATE (
+        SUM ( fact_PL[Amount] ),
+        fact_PL[Entity] = "H&R",
+        fact_PL[AccountCode] = "5230",
+        fact_PL[RecordType] = "Source"
+    )
+VAR Eliminated =
+    CALCULATE (
+        SUM ( fact_PL[Amount] ),
+        fact_PL[Entity] = "H&R",
+        fact_PL[AccountCode] = "5230",
+        fact_PL[RecordType] = "Elimination"
+    )
+RETURN
+    Booked + Eliminated
+
+// EL1 to EL4 remove revenue in one entity and the matching cost in the other,
+// so they have no net profit effect and this measure must be exactly 0.
+// EL5 is deliberately excluded -- see spec §5.4.
+Check Elimination Symmetry =
+VAR RevElim =
+    CALCULATE (
+        SUM ( fact_PL[Amount] ),
+        fact_PL[RecordType] = "Elimination",
+        fact_PL[Section] = "Revenue",
+        fact_PL[ElimID] <> "EL5"
+    )
+VAR CogElim =
+    CALCULATE (
+        SUM ( fact_PL[Amount] ),
+        fact_PL[RecordType] = "Elimination",
+        fact_PL[Section] = "COGS"
+    )
+RETURN
+    RevElim - CogElim
+
+// EL5 has no cost side in the data available, so it does reduce group profit.
+// Surfaced rather than absorbed. FY2025 actual: ¥5,760,000. See spec §5.4.
+EL5 Unmatched =
+CALCULATE (
+    SUM ( fact_PL[Amount] ),
+    fact_PL[RecordType] = "Elimination",
+    fact_PL[ElimID] = "EL5"
+) * -1
+
+// Parallel run against Diggle. Remove when Diggle is retired.
+Check vs Diggle =
+VAR D = SUM ( chk_Diggle[Diggle] )
+VAR M =
+    SWITCH (
+        SELECTEDVALUE ( chk_Diggle[Section] ),
+        "Revenue", [Revenue Act],
+        "COGS", [COGS Act]
+    )
+RETURN
+    M - D

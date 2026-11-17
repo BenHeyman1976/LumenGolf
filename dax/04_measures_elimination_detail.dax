@@ -1,0 +1,13 @@
+// =========================================================================
+// 8.4 Elimination detail  (spec §8.4)
+//
+// [Elimination by Line] on a table visual with fact_PL[ElimID] and
+// fact_PL[AccountName] on rows reproduces the elimination schedule of
+// Section 4.2.
+// =========================================================================
+
+Eliminations Total =
+CALCULATE ( SUM ( fact_PL[Amount] ), fact_PL[RecordType] = "Elimination" )
+
+Elimination by Line =
+CALCULATE ( SUM ( fact_PL[Amount] ), fact_PL[RecordType] = "Elimination" ) * -1

@@ -1,0 +1,30 @@
+// =========================================================================
+// 8.3 Actual, budget and variance  (spec §8.3)
+// =========================================================================
+
+Revenue Act = CALCULATE ( [Revenue], dim_Scenario[Scenario] = "Actual" )
+Revenue Bud = CALCULATE ( [Revenue], dim_Scenario[Scenario] = "Budget" )
+Revenue Var = [Revenue Act] - [Revenue Bud]
+Revenue Var % = DIVIDE ( [Revenue Var], [Revenue Bud] )
+
+COGS Act = CALCULATE ( [COGS], dim_Scenario[Scenario] = "Actual" )
+COGS Bud = CALCULATE ( [COGS], dim_Scenario[Scenario] = "Budget" )
+COGS Var = [COGS Act] - [COGS Bud]
+
+GP Act = [Revenue Act] - [COGS Act]
+GP Bud = [Revenue Bud] - [COGS Bud]
+GP Var = [GP Act] - [GP Bud]
+GP Var % = DIVIDE ( [GP Var], [GP Bud] )
+
+GM% Act = DIVIDE ( [GP Act], [Revenue Act] )
+GM% Bud = DIVIDE ( [GP Bud], [Revenue Bud] )
+GM% Var pts = [GM% Act] - [GM% Bud]
+
+// Prior-year columns -- blank until FY2024 is loaded (spec §6 item 9).
+// Loading FY2024 adds files through the same function, no code change.
+
+Revenue PY Act =
+CALCULATE ( [Revenue Act], DATEADD ( dim_Date[Date], -1, YEAR ) )
+
+GP PY Act =
+CALCULATE ( [GP Act], DATEADD ( dim_Date[Date], -1, YEAR ) )

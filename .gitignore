@@ -1,0 +1,34 @@
+# Client data — never commit
+samples/*.xlsx
+samples/*.xls
+samples/*.xlsb
+samples/*.csv
+samples/*.pbix
+samples/*.pbit
+
+# Any accidental drop of real source files anywhere in the tree
+*H&R_*.xlsx
+*RELO_*.xlsx
+*RNAG_*.xlsx
+*RNA_Elimination_Proof*.xlsx
+*IJ data*.xlsx
+*ReloJapan_*.xlsx
+*H&RConsultants_*.xlsx
+*RNAGroup_*.xlsx
+*2025年度_*
+*予実表*.xlsx
+*連結レポート*.xlsx
+*連結*.xlsb*
+
+# Power BI binaries
+*.pbix
+*.pbit
+
+# Scratch / OS
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.log

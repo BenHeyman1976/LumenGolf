@@ -1,0 +1,39 @@
+// =========================================================================
+// 8.2 Below the gross-profit line  (spec §8.2)
+//
+// These recreate P2000, P3000, P4000, P5000, P6000, P6100 AFTER elimination,
+// which is why the source P-code rows are deliberately not imported.
+//
+// NOTE: per spec §5.4, the model is correct down to Gross Profit only on the
+// data currently available. EL5 has no matching cost side here, so Operating
+// Profit is understated by ¥5,760,000. Also per spec §10, several IC items
+// below GP are not yet eliminated. Treat these measures as working totals,
+// not board-ready, until those are resolved.
+// =========================================================================
+
+SG&A =
+CALCULATE (
+    SUM ( fact_PL[Amount] ),
+    fact_PL[Section] IN { "SG&A Personnel", "SG&A Other" }
+)
+
+Operating Profit = [Gross Profit] - [SG&A]
+
+Non-operating Income =
+CALCULATE ( SUM ( fact_PL[Amount] ), fact_PL[Section] = "Non-operating income" )
+
+Non-operating Expense =
+CALCULATE ( SUM ( fact_PL[Amount] ), fact_PL[Section] = "Non-operating expense" )
+
+Ordinary Profit = [Operating Profit] + [Non-operating Income] - [Non-operating Expense]
+
+Extraordinary Income =
+CALCULATE ( SUM ( fact_PL[Amount] ), fact_PL[Section] = "Extraordinary income" )
+
+Extraordinary Loss =
+CALCULATE ( SUM ( fact_PL[Amount] ), fact_PL[Section] = "Extraordinary loss" )
+
+Tax = CALCULATE ( SUM ( fact_PL[Amount] ), fact_PL[Section] = "Tax" )
+
+Net Profit =
+[Ordinary Profit] + [Extraordinary Income] - [Extraordinary Loss] - [Tax]
