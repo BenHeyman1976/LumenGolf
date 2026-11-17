@@ -145,8 +145,8 @@ def load_entity(path: Path, entity_name: str, entity_code: str) -> list[dict]:
         m = HEADER_RE.search(name)
         if not m:
             continue
-        year, month, scen = int(m.group(1)), int(m.group(2)), m.group(3)
-        scenario = "Budget" if scen == "予算" else "Actual"
+        year, month, scen_char = int(m.group(1)), int(m.group(2)), m.group(3)
+        scenario = "Budget" if scen_char == "予算" else "Actual"
         month_cols.append((ci, date(year, month, 1), scenario))
     if not month_cols:
         raise RuntimeError(f"{path.name}: no (発生) columns found")
@@ -202,7 +202,7 @@ def load_entity(path: Path, entity_name: str, entity_code: str) -> list[dict]:
                 "Section": section,
                 "PCode": pcode,
                 "Date": d,
-                "Scenario": scenario,
+                "Scenario": scen,
                 "Amount": amt,
                 "RecordType": "Source",
                 "ElimID": None,
