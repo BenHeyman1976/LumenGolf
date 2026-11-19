@@ -257,13 +257,13 @@ If any of the ✅ items fail, investigate before using numbers from any other pa
 ### 月次更新 / Monthly refresh
 
 1. 当月分の3つの予実表ファイル（H&R / RELO / RNAG）を、`p_Folder` が指すフォルダに上書き配置。
-2. イミグレーションジャパンの数値をハンドキーで更新（`fact_IJ` クエリの該当行、仕様書 §2.3）。
+2. イミグレーションジャパンの数値をハンドキーで更新（`fact_IJ` クエリの該当行、仕様書 §2.3）。出典は `IT Team / Consolidated documents / Data & Template / IJ data coversion.xlsx` の `ORG data` シート。
 3. Power BI Desktop で **Home → Refresh**。
 4. **ページ5（検証）** を開き、上記チェックリストを確認。
 5. 問題なければ保存し、SharePointの `Power BI model` フォルダに上書き。
 
 1. Overwrite the three monthly 予実表 files (H&R / RELO / RNAG) in the folder `p_Folder` points at.
-2. Hand-key the Immigration Japan figures for the month (edit `fact_IJ` query, spec §2.3).
+2. Hand-key the Immigration Japan figures for the month (edit `fact_IJ` query, spec §2.3). Source: `IT Team / Consolidated documents / Data & Template / IJ data coversion.xlsx`, sheet `ORG data`.
 3. In Power BI Desktop: **Home → Refresh**.
 4. Open **Page 5 (Validation)** and run the checklist above.
 5. If clean, save and overwrite the PBIX in the SharePoint `Power BI model` folder.

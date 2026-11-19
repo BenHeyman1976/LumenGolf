@@ -19,6 +19,8 @@ Four files:
 - `RNA_Consolidated_PL.pbix` — the Power BI report
 - `H&R_FY2025予実表.xlsx`, `RELO_FY2025予実表.xlsx`, `RNAG_FY2025予実表.xlsx` — the three source files, versions matching the spec's §2.1 SHA-256 hashes
 
+**Fourth input — Immigration Japan.** Not read directly by the model; its six FY2025 figures (Jan–Mar revenue + cost) are hand-keyed into the `fact_IJ` query per spec §2.3. The source `IJ data coversion.xlsx` lives in the existing folder **`IT Team / Consolidated documents / Data & Template`** — no need to duplicate it. Values in the model can be audited against the `ORG data` sheet of that file.
+
 ## What has been built
 
 A five-page Power BI report reproducing the consolidation logic in spec §3 to §5, from the Bugyo `予算実績対比表` exports. Every number in spec §4 (full-year and all 12 months, both Actual and Budget) reconciles **to the yen**, and every control in spec §5.1 passes.
