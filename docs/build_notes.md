@@ -8,16 +8,17 @@ Blank report. Save as `RNA_Consolidated_PL.pbix`.
 
 ## Step 2 — parameters
 
-**Home → Transform data** opens the Power Query Editor. In the editor: **Home → Manage parameters → New parameter**, type **Text**, for each of the four below.
+**Home → Transform data** opens the Power Query Editor. In the editor: **Home → Manage parameters → New parameter**, type **Text**, for each of the five below.
 
-| Name | Value |
+| Name | Example value |
 |---|---|
-| `p_Folder` | The folder holding the three input files, **with a trailing backslash**, e.g. `C:\RNA\FY2025\` |
+| `p_SharePointSite` | `https://morethanrelo.sharepoint.com/sites/ITTeam` — the site URL, no trailing slash |
+| `p_FolderPath` | `PowerBI Project 2026/Power BI model` — path within Shared Documents, forward slashes, no leading/trailing slash |
 | `p_FileHR` | `H&R_FY2025予実表.xlsx` |
 | `p_FileRELO` | `RELO_FY2025予実表.xlsx` |
 | `p_FileRNAG` | `RNAG_FY2025予実表.xlsx` |
 
-Holding the folder as a parameter is what lets the report be repointed at SharePoint later without any code change.
+Files are read directly from SharePoint — nothing lands on anyone's PC. On first refresh, Power BI prompts for credentials against the SharePoint URL: pick **Organizational account** and sign in with the Microsoft work account that has access to the site. Power BI caches this so subsequent refreshes don't prompt.
 
 ## Step 3 — paste the Power Query queries in order
 

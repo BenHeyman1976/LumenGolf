@@ -1,4 +1,4 @@
-// chk_ImportIntegrity  (spec §7.12)
+// chk_ImportIntegrity  (spec §7.12, SharePoint variant)
 // 検証A。各ファイルが自ら表示しているPコード小計を読み取り、取り込んだ内容と照合する。
 // Variance はすべて 0 でなければならない。0以外の行がある場合は、取り込みで欠落または
 // 重複が生じている。レポートのいかなる数値も信頼する前に原因を調査すること。
@@ -6,10 +6,25 @@
 // to what the import loaded. Every Variance must be 0. A non-zero row means the
 // import dropped or duplicated something -- investigate before trusting any number
 // in the report.
+//
+// SharePoint variant: reads files directly from the client's SharePoint via
+// SharePoint.Contents. Same files as fn_LoadEntity, resolved the same way, so
+// Stated and Imported are guaranteed to come from the same bytes.
 let
+    // 共通：SharePointから「Shared Documents / p_FolderPath」のフォルダを取得する。
+    // Common: resolve the SharePoint folder "Shared Documents / p_FolderPath".
+    Site       = SharePoint.Contents(p_SharePointSite, [ApiVersion = 15]),
+    Documents  = Site{[Name = "Shared Documents"]}[Content],
+    Segments   = List.Select(Text.Split(p_FolderPath, "/"), each _ <> ""),
+    Folder     = List.Accumulate(
+                     Segments,
+                     Documents,
+                     (current, seg) => current{[Name = seg]}[Content]),
+
     ReadSubtotals = (FileName as text, EntityName as text) as table =>
         let
-            Source    = Excel.Workbook(File.Contents(p_Folder & FileName), null, true),
+            FileEntry = Folder{[Name = FileName]}[Content],
+            Source    = Excel.Workbook(FileEntry, null, true),
             Sheet     = Source{[Item = "損益計算書", Kind = "Sheet"]}[Data],
             ColB      = List.Transform(Table.Column(Sheet, "Column2"),
                                        each if _ = null then "" else Text.Trim(Text.From(_))),

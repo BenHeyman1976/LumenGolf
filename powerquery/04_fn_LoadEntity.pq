@@ -1,12 +1,33 @@
-// fn_LoadEntity  (spec §7.4)
+// fn_LoadEntity  (spec §7.4, SharePoint variant)
 // 奉行の予算実績対比表を1ファイル読み込み、縦持ち形式で返す。
 // 1行 = 会社 / 勘定科目 / 月 / 予算実績区分。
 // Reads one Bugyo 予算実績対比表 export and returns it in long format:
 // one row per Entity / Account / Month / Scenario.
+//
+// SharePoint variant: reads files directly from the client's SharePoint site
+// via SharePoint.Contents. No files leave the tenant, access follows SharePoint
+// permissions, no per-user local path setup.
 (FileName as text, EntityName as text, EntityCode as text) as table =>
 let
-    Source   = Excel.Workbook(File.Contents(p_Folder & FileName), null, true),
-    Sheet    = Source{[Item = "損益計算書", Kind = "Sheet"]}[Data],
+    // --- SharePointサイトからファイルを取得する。
+    //     サイト → Shared Documents → p_FolderPath で指定されたサブフォルダー → 対象ファイル
+    // --- Fetch the file from SharePoint:
+    //     site → "Shared Documents" library → sub-folder named by p_FolderPath → the file.
+    Site       = SharePoint.Contents(p_SharePointSite, [ApiVersion = 15]),
+    Documents  = Site{[Name = "Shared Documents"]}[Content],
+
+    // p_FolderPath を / で分割し、各セグメントごとに1階層ずつ下る。
+    // Walk p_FolderPath segment-by-segment so the parameter can contain any depth.
+    Segments   = List.Select(Text.Split(p_FolderPath, "/"), each _ <> ""),
+    Folder     = List.Accumulate(
+                     Segments,
+                     Documents,
+                     (current, seg) => current{[Name = seg]}[Content]),
+
+    FileEntry  = Folder{[Name = FileName]}[Content],
+    Source     = Excel.Workbook(FileEntry, null, true),
+
+    Sheet      = Source{[Item = "損益計算書", Kind = "Sheet"]}[Data],
 
     // --- 見出し行は行番号ではなく内容で特定する。現在はその上に6行の
     //     メタデータ行があるが、これが変わっても動作する。
