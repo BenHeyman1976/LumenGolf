@@ -27,3 +27,21 @@ Nice-to-have:
 - The file hashes from spec §2.1 so we know we have the exact versions the spec describes.
 
 Delivery: Google Drive folder shared with the user's account; this session can read via `mcp__Google_Drive__*`.
+
+## Hosting / data-source upgrade (deferred — awaiting client IT engagement)
+
+The current build reads the three 予実表 files via **`p_Folder` as a local filesystem path**. The intended user will Sync the SharePoint folder to their PC via OneDrive and repoint `p_Folder` at the synced local path. Works, but puts files on each user's disk.
+
+A **SharePoint-connector variant** was built and tested briefly in commit `04d3a1a` ("Switch file-reading layer to SharePoint connector"), then reverted in `e4d9bc6` because cross-tenant auth couldn't be completed in the developer environment:
+- Files live on `morethanrelo.sharepoint.com` tenant.
+- Developer (Ben) holds a `legacyandkey.com` account and a `relonetworkasia` account; no morethanrelo guest. Can't authenticate Power BI Desktop against morethanrelo directly.
+- Client end-users on `relonetworkasia` may or may not have cross-tenant guest access to the morethanrelo site — unverified.
+
+**When to resurrect:**
+- Client's IT confirms a native account on the morethanrelo tenant (or cross-tenant SharePoint access with Power BI Desktop allowed by Conditional Access), **or**
+- The report migrates to Power BI Service with an on-tenant workspace and a scheduled refresh via Data Gateway or SharePoint connector.
+
+**How to resurrect:**
+- `git cherry-pick 04d3a1a` restores the SharePoint-variant code (parameters, `fn_LoadEntity`, `chk_ImportIntegrity`, updated build_notes).
+- The variant uses two parameters: `p_SharePointSite` (site URL, e.g. `https://morethanrelo.sharepoint.com/sites/ITTeam`) and `p_FolderPath` (path within Shared Documents).
+- On first refresh, PBI prompts for an **Organizational account** against the SharePoint URL.
