@@ -59,13 +59,18 @@ CALCULATE (
 ) * -1
 
 // Parallel run against Diggle. Remove when Diggle is retired.
+// The 3rd SWITCH arm (fallback with no section selected) handles the grand-total
+// row in a matrix: SELECTEDVALUE returns blank when both sections are in context,
+// so we sum both and compare to the total Diggle figure. Row-level evaluation is
+// unaffected because one section is always selected on each row.
 Check vs Diggle =
 VAR D = SUM ( chk_Diggle[Diggle] )
 VAR M =
     SWITCH (
         SELECTEDVALUE ( chk_Diggle[Section] ),
         "Revenue", [Revenue Act],
-        "COGS", [COGS Act]
+        "COGS",    [COGS Act],
+        [Revenue Act] + [COGS Act]
     )
 RETURN
     M - D
