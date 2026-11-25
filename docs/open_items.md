@@ -28,6 +28,16 @@ Nice-to-have:
 
 Delivery: Google Drive folder shared with the user's account; this session can read via `mcp__Google_Drive__*`.
 
+## Client sign-off plan (as of 25 Nov 2026)
+
+Client reviewer has confirmed the three next steps on their side, in this sequence:
+
+1. **Page 5 validation + Page 1 reconciliation to the current consolidated report** — the actual **go/no-go** for FY2025 sign-off. Items 2 and 3 below do **not** block this step; once step 1 passes, the Power BI model can be treated as authoritative.
+2. **Monthly handoff process for the four inputs** (3 × 予実表 + Kurihara-san's IJ Excel) — needed to validate each monthly refresh gives the same answers vs Diggle during the parallel-run period (spec §5.3, Control C).
+3. **IJ budget data from CP** — CP maintains IJ as a BG(IM) in Diggle; once shared, adding it to the model gives Pages 1/3/4 a non-blank IJ on the Budget basis. No effect on any Actual figure.
+
+Awaiting client's confirmation on step 1 (Page 5 / Page 1 reconciliation) before moving to hosting and label-translation work.
+
 ## Hosting / data-source upgrade (deferred — awaiting client IT engagement)
 
 The current build reads the three 予実表 files via **`p_Folder` as a local filesystem path**. The intended user will Sync the SharePoint folder to their PC via OneDrive and repoint `p_Folder` at the synced local path. Works, but puts files on each user's disk.
